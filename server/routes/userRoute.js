@@ -1,7 +1,6 @@
 import  Express  from "express"
 import User from "../models/userModel.js"
 import jwt from "jsonwebtoken"
-import authenticateToken from "./authRoute.js"
 const router = Express.Router();
 
 router.post("/signup",async(req,res)=>{
@@ -23,17 +22,15 @@ router.post("/login",async(req,res)=>{
             return res.status(400).json({msg:'missing field'})
         }
         const userData = await User.findOne({username:username, password:password})
-        console.log(userData)
         if(!userData){
             console.log("user data not found!")
             res.status(500).json({msg:'login error'})
         }
         else{
             console.log(userData);
-            //create token
-            const accessToken = jwt.sign({userData},"secretKey")
+            const accessToken = jwt.sign({username: username},"secretKey")
+            console.log(accessToken);
             res.status(200).json({accessToken: accessToken})
-            // return res.status(200).json({msg:'success'})
         }
     }catch(err){
         console.log("error detected at login post: "+err)
@@ -41,7 +38,7 @@ router.post("/login",async(req,res)=>{
     }
 })
 
-router.get("/admin",authenticateToken,async(req,res)=>{
+router.get("/admin",async(req,res)=>{
     res.json({msg:"hi!"})
 })
 

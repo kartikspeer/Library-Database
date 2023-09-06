@@ -1,7 +1,7 @@
 import  Express  from "express";
 import mongoose from 'mongoose';
 import cors from "cors";
-import userRouter from "./routes/bookRoute.js";
+import bookRouter from "./routes/bookRoute.js";
 import authRouter from "./routes/userRoute.js"
 import bodyParser from 'body-parser';
 
@@ -38,7 +38,7 @@ app.get("/",async (req,res)=>{
     res.send("hi this is the backend server!")
 })
 
-app.use("/api", userRouter);
+app.use("/books", bookRouter);
 app.use("/auth", authRouter);
 
 app.listen(8000,()=>{console.log("success")});

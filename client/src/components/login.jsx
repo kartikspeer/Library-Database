@@ -9,11 +9,13 @@ const userType=[
     {value:"admin",label:"admin"}
 ]
 const signUpValues={
+    role:"user",
     name:'',
     username:'',
     password:''
 }
 const loginValues={
+    role:"user",
     username:'',
     password:''
 }
@@ -26,13 +28,14 @@ const Login = ()=>{
     const navigate = useNavigate()
 
     const onInputChange = (e)=>{
+        console.log(signUp);
         setSignUp({...signUp, [e.target.name]:e.target.value});
     }
     const loginValueChange = (e)=>{
         setLogin({...login, [e.target.name]:e.target.value});
-        console.log(login)
     }
     const createAcc = ()=>{
+        console.log(signUp);
         Axios.post("http://localhost:8000/auth/signup",signUp).then((res)=>{
             console.log(res);
             setErr(true);
@@ -73,6 +76,7 @@ const Login = ()=>{
                         userType.map((element)=>(
                             <MenuItem key={element.value} value={element.value} onClick={()=>{
                                 setUserTypeValue(element.label);
+                                setLogin({...login, ["role"]:element.label});
                                 {console.log(userTypeValue)}
                             }}>
                                 {element.label}

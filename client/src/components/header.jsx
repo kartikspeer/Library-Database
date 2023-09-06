@@ -11,7 +11,7 @@ const Header = ()=>{
     return(
         <header className="header">
             <img src="https://www.nicepng.com/png/detail/363-3637443_cropped-perry-public-library-color-logo-a-book.png" alt="" className="logo"/>
-            <h1>Arthur's Library Database</h1>
+            <h1>Library Database</h1>
             <div className="logoutbtn">
                 <Button variant="contained" onClick={(e)=>{onLogout(e)}}>Log Out</Button>
             </div>

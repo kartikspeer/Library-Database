@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { TextField, Button } from '@mui/material';
 import { useState } from "react";
 
@@ -17,7 +17,6 @@ const SearchBar = (props)=>{
     const onInputChange = (e)=>{
         setSearchField({...searchField, [e.target.name]:e.target.value});
         setValue({...value,[e.target.name]:e.target.value});
-        // console.log(searchField);
     }
 
     const searchFunc=()=>{

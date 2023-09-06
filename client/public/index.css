@@ -139,3 +139,27 @@ header{
     width: 90%;
     height: 50px;
 }
+/* ----------------------addbook--------------------- */
+
+.addbook{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    margin: 20%;
+    gap: 0.5rem;
+}
+
+.addbookinput{
+    width: 90%;
+}
+
+.bookaddbtn{
+    width: 90%;
+}
+
+.addbook p{
+    color: red;
+}
