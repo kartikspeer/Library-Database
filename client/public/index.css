@@ -54,10 +54,10 @@ header{
 /* searchbar------------------------------------------> */
 .menubar{
     display: flex;
-    gap: 3rem;
+    /* gap: 3rem; */
 }
 .searchbar{
-    margin-left: auto;
+    margin: auto;
     margin-top: 50px;
     display: flex;
     justify-content: space-between;

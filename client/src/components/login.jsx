@@ -37,9 +37,8 @@ const Login = ()=>{
     const createAcc = ()=>{
         console.log(signUp);
         Axios.post("http://localhost:8000/auth/signup",signUp).then((res)=>{
-            console.log(res);
             setErr(true);
-            setLogin(signUp);
+            setLogin(loginValues);
             setSignUp(signUpValues);
             setAccount("login");
         }).catch((err)=>{
@@ -60,7 +59,7 @@ const Login = ()=>{
                 localStorage.setItem("authtoken",res.data.accessToken);
             }   
             setErr(true);
-            setLogin(login);
+            setLogin(loginValues);
         }).catch((err)=>{
             console.log("error: ",err);
             setErr(false);
@@ -89,8 +88,8 @@ const Login = ()=>{
                         ))
                     }
                 </TextField> 
-                <TextField label="username" name='username' className="loginTextfield" onChange={(e)=>{loginValueChange(e)}}></TextField>
-                <TextField label="password" name='password' type={showPassword?"text":"password"}  className="loginTextfield" onChange={(e)=>{loginValueChange(e)}}></TextField>
+                <TextField label="username" name='username' className="loginTextfield" value={login.username} onChange={(e)=>{loginValueChange(e)}}></TextField>
+                <TextField label="password" name='password' type={showPassword?"text":"password"}  className="loginTextfield" value={login.password} onChange={(e)=>{loginValueChange(e)}}></TextField>
                 {!err && <Typography>Invalid Username/password</Typography>}
                 <FormControlLabel control={<Checkbox onChange={()=>handleClickShowPassword()}/>} label="show password" />
                 <Button variant="contained" className="loginButton" onClick={()=>{accLogin()}}>Log in</Button>
@@ -113,9 +112,9 @@ const Login = ()=>{
                         ))
                     }
                 </TextField>
-                <TextField label="Name" name='name' className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>
-                <TextField label="New username" name='username' className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>
-                <TextField label="New password" name='password' type={showPassword?"text":"password"} className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>
+                <TextField label="Name" name='name' className="loginTextfield" onChange={(e)=>{onInputChange(e)}} value={signUp.name}></TextField>
+                <TextField label="New username" name='username' className="loginTextfield" onChange={(e)=>{onInputChange(e)}} value={signUp.username}></TextField>
+                <TextField label="New password" name='password' type={showPassword?"text":"password"} className="loginTextfield" onChange={(e)=>{onInputChange(e)}}value={signUp.password}></TextField>
                 <FormControlLabel control={<Checkbox onChange={()=>handleClickShowPassword()}/>} label="show password" />
                 {!err && <Typography>Something went wrong, please try again!</Typography>}
                 <Button variant="contained" className="loginButton" onClick={()=>{createAcc()}}>Create Account</Button>

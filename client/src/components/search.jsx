@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button } from '@mui/material';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 const searchValues={
     title:"",
@@ -9,6 +9,7 @@ const searchValues={
 }
 const SearchBar = (props)=>{
     const navigate = useNavigate();
+    const location = useLocation();
     const [searchField,setSearchField] = useState(searchValues);
     const [btn,setBtn] = useState("Search")
     const [value,setValue] = useState(searchValues)
@@ -48,7 +49,7 @@ const SearchBar = (props)=>{
                     <Button variant={variant} onClick={()=>{searchFunc()}} color={btnColor}>{btn}</Button>
                 </div>
             </div>
-            <div className="addBook">
+            {location.state.role==="admin"?<div className="addBook">
                 <Button variant="contained" style={{backgroundColor: "red"}} onClick={()=>{
                     navigate('/addbook',{
                         state:{
@@ -56,7 +57,7 @@ const SearchBar = (props)=>{
                         }
                     });
                 }}>Add</Button>
-            </div>
+            </div>:""}
         </div>
         
     )
