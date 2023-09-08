@@ -18,7 +18,7 @@ const MainBody = (props)=>{
     return[
         <div className="mainBody">
             {booksData.map((element)=>{
-                return <Card booksData = {element} val={v4()} isSearched={props.isSearched} searchField = {props.searchField}/>
+                return <Card booksData = {element} val={v4()} isSearched={props.isSearched} searchField = {props.searchField} role={props.role}/>
             })}
         </div>
     ]

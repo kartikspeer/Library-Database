@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import SearchBar from './search.jsx';
 import Addbtn from './addbookbtn.jsx';
@@ -12,15 +12,16 @@ const searchValues={
   author:"",
 }
 function Home() {
+  const location = useLocation();
+  console.log(location.state)
   const [isSearched,setIsSearched] = useState(false);
   const [searchField,setSearchField] = useState(searchValues);
 
   return (
     <div className="App">
       <Header />
-      <SearchBar isSearched = {isSearched} setIsSearched={setIsSearched} searchField={searchField} setSearchField={setSearchField}/>
-      <Addbtn />
-      <MainBody isSearched = {isSearched} setIsSearched={setIsSearched} searchField={searchField} setSearchField={setSearchField}/>
+      <SearchBar isSearched = {isSearched} setIsSearched={setIsSearched} searchField={searchField} setSearchField={setSearchField} role={location.state.role}/>
+      <MainBody isSearched = {isSearched} setIsSearched={setIsSearched} searchField={searchField} setSearchField={setSearchField} role={location.state.role}/>
     </div>
   );
 }

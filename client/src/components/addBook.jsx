@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {TextField, Button} from "@mui/material";
 import Header from "./header";
 import API from "../services/API";
-import { useEffect } from "react";
 
 const bookDetails = {
     title:"",
@@ -11,7 +11,9 @@ const bookDetails = {
     copiesLeft:""
 }
 const Addbook = (props)=>{
-    const [value,setValue] = useState(bookDetails);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [value,setValue] = useState(location.state.isEdit?location.state.data:bookDetails);
     const [formErrors,setFormErrors] = useState({});
     const [isSubmit, setSubmit] = useState(false);
     const onAdd = ()=>{
@@ -40,18 +42,42 @@ const Addbook = (props)=>{
 
     useEffect(() =>{
         if(Object.keys(formErrors).length === 0 && isSubmit){
-            API.post(`/books/add`, value).then((res)=>{
+            var scs = false;
+            if(!location.state.isEdit){
+                API.post(`/books/add`, value).then((res)=>{
                 if(res.status===200){
                     setValue(bookDetails);
-                    alert("Added successfully!!!");
+                    // alert("Added successfully!!!");
+                    // navigate(-1);
+                    if(window.confirm("Added successfully!!!") === true){
+                        navigate(-1);
+                    }
                 }
                 else{
                     alert("failed");
                 }
-            }).catch((err)=>{
-                console.log("error at adding books: "+err);
-                alert("failed");
-            });
+                }).catch((err)=>{
+                    console.log("error at adding books: "+err);
+                    alert("failed");
+                });
+            }
+            else{
+                API.post(`/books/update/${location.state.data._id}`, value).then((res)=>{
+                if(res.status===200){
+                    setValue(bookDetails);
+                    // alert("Updated successfully!!!");
+                    if(window.confirm("Updated successfully!!!") === true){
+                        navigate(-1);
+                    }
+                }
+                else{
+                    alert("failed");
+                }
+                }).catch((err)=>{
+                    console.log("error at updating books: "+err);
+                    alert("failed");
+                });
+            }
         }
     },[formErrors]);
     
@@ -67,7 +93,7 @@ const Addbook = (props)=>{
                 <p>{formErrors.publication}</p>
                 <TextField required variant="outlined" label="Availabilitiy" type="number" name="copiesLeft" className="addbookinput" value={value.copiesLeft} onChange={(e)=>{onInputChange(e)}}></TextField>
                 <p>{formErrors.copiesLeft}</p>
-                <Button variant="contained" className="bookaddbtn" onClick={()=>{onAdd()}}>Add</Button>
+                <Button variant="contained" className="bookaddbtn" onClick={()=>{onAdd()}}>{location.state.isEdit?"Update":"Add"}</Button>
             </div> 
         </div>
     )

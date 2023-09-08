@@ -7,7 +7,11 @@ const Addbtn = ()=>{
     return (
         <div>
             <Button variant="contained" style={{backgroundColor: "red"}} onClick={()=>{
-                navigate('/addbook');
+                navigate('/addbook',{
+                    state:{
+                        isEdit:false
+                    }
+                });
             }}>Add</Button>
         </div>
     )

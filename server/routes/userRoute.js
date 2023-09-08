@@ -25,10 +25,15 @@ router.post("/login",async(req,res)=>{
         if(!userData){
             console.log("user data not found!")
             res.status(500).json({msg:'login error'})
+        }else if(userData.role === "user" && req.body.role === "admin"){
+            res.status(500).send({
+                success: false,
+                message: "login failed, not a admin account."
+            });
         }
         else{
             console.log(userData);
-            const accessToken = jwt.sign({username: username},"secretKey")
+            const accessToken = jwt.sign({userId: userData._id},"secretKey")
             console.log(accessToken);
             res.status(200).json({accessToken: accessToken})
         }

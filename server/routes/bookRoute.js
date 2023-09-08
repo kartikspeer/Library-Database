@@ -2,6 +2,7 @@ import Express from "express";
 import NewBooks from "../models/bookModel.js";
 
 import authmiddleware from "../middleware/authmiddleware.js"
+import adminmiddleware from "../middleware/adminmiddleware.js"
 
 const router = Express.Router();
 
@@ -10,7 +11,7 @@ router.get("/search",authmiddleware, async (req,res)=>{
     return res.json(data);
 });
 
-router.delete("/delete/:id",async(req, res)=>{
+router.delete("/delete/:id",authmiddleware,adminmiddleware,async(req, res)=>{
     try{
         await NewBooks.findByIdAndDelete(req.params.id);
         return res.status(200).send({
@@ -24,11 +25,21 @@ router.delete("/delete/:id",async(req, res)=>{
     }
 });
 
-router.post("update",async (req,res)=>{
-    
+router.post("/update/:id",authmiddleware,adminmiddleware,async (req,res)=>{
+    try{
+        await NewBooks.findByIdAndUpdate(req.params.id,req.body)
+        return res.status(200).send({
+            message:"updated success!"
+        });
+    }catch(error){
+        console.log(error);
+        return res.status(500).send({
+            message:"update failed!"
+        })
+    }
 });
 
-router.post("/add", authmiddleware, async(req,res)=>{
+router.post("/add", authmiddleware,adminmiddleware, async(req,res)=>{
     console.log(req.body);
     try{
         const data = NewBooks(req.body);

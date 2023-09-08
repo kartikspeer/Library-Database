@@ -51,8 +51,13 @@ const Login = ()=>{
         Axios.post("http://localhost:8000/auth/login",login).then((res)=>{
             console.log(res);
             if(res.status===200){
-                navigate('/home')
-                localStorage.setItem("authtoken",res.data.accessToken)
+                setUserTypeValue(login.role);
+                navigate('/home',{
+                    state:{
+                        role:userTypeValue
+                    }
+                });
+                localStorage.setItem("authtoken",res.data.accessToken);
             }   
             setErr(true);
             setLogin(login);
@@ -89,12 +94,25 @@ const Login = ()=>{
                 {!err && <Typography>Invalid Username/password</Typography>}
                 <FormControlLabel control={<Checkbox onChange={()=>handleClickShowPassword()}/>} label="show password" />
                 <Button variant="contained" className="loginButton" onClick={()=>{accLogin()}}>Log in</Button>
-                {userTypeValue==="user" && <Button variant="contained" color="success" className="loginButton" onClick={()=>{setAccount("signUp")}}>Create new account</Button>}
+                <Button variant="contained" color="success" className="loginButton" onClick={()=>{setAccount("signUp")}}>Create new account</Button>
             </div>
         :
             <div className="loginCard">
                 <img src="https://www.nicepng.com/png/detail/363-3637443_cropped-perry-public-library-color-logo-a-book.png" className="loginImage"/>
                 <h3>Library Database Management System</h3>
+                <TextField select label="Select" className="loginTextfield" variant="filled" defaultValue="user" helperText="Select User Type" >
+                    {
+                        userType.map((element)=>(
+                            <MenuItem key={element.value} value={element.value} onClick={()=>{
+                                setUserTypeValue(element.label);
+                                setSignUp({...signUp, ["role"]:element.label});
+                                {console.log(userTypeValue)}
+                            }}>
+                                {element.label}
+                            </MenuItem>
+                        ))
+                    }
+                </TextField>
                 <TextField label="Name" name='name' className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>
                 <TextField label="New username" name='username' className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>
                 <TextField label="New password" name='password' type={showPassword?"text":"password"} className="loginTextfield" onChange={(e)=>{onInputChange(e)}}></TextField>

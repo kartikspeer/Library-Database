@@ -1,13 +1,14 @@
 import React from "react";
 import { TextField, Button } from '@mui/material';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const searchValues={
     title:"",
     author:"",
 }
 const SearchBar = (props)=>{
-    
+    const navigate = useNavigate();
     const [searchField,setSearchField] = useState(searchValues);
     const [btn,setBtn] = useState("Search")
     const [value,setValue] = useState(searchValues)
@@ -39,13 +40,25 @@ const SearchBar = (props)=>{
     }
 
     return(
-        <div className="searchbar">
-            <div className="inputField">
-                <TextField variant="standard" label="Title" name="title" onChange={(e)=>{onInputChange(e)}} value={value.title}></TextField>
-                <TextField variant="standard" label="Author" name="author" onChange={(e)=>{onInputChange(e)}} value={value.author}></TextField>
+        <div className="menubar">
+            <div className="searchbar">
+                <div className="inputField">
+                    <TextField variant="standard" label="Title" name="title" onChange={(e)=>{onInputChange(e)}} value={value.title}></TextField>
+                    <TextField variant="standard" label="Author" name="author" onChange={(e)=>{onInputChange(e)}} value={value.author}></TextField>
+                    <Button variant={variant} onClick={()=>{searchFunc()}} color={btnColor}>{btn}</Button>
+                </div>
             </div>
-            <Button variant={variant} onClick={()=>{searchFunc()}} color={btnColor}>{btn}</Button>
+            <div className="addBook">
+                <Button variant="contained" style={{backgroundColor: "red"}} onClick={()=>{
+                    navigate('/addbook',{
+                        state:{
+                            isEdit:false
+                        }
+                    });
+                }}>Add</Button>
+            </div>
         </div>
+        
     )
 }
 

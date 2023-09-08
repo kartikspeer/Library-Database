@@ -1,13 +1,14 @@
-import jwt from "jsonwebtoken"
-
-authenticateadmin = async (req,res,next)=>{
+import User from "../models/userModel.js";
+const adminmiddleware = async (req,res,next)=>{
     try {
-    const user = userModel.findOne({username: req.body.username, password: req.body.password});
-    //check admin
+        console.log(req.body)
+        const user = await User.findOne({_id:req.body.userId});
+        console.log(user)
+        //check admin
         if (user?.role !== "admin") {
             return res.status(401).send({
             success: false,
-            message: "AUth Fialed",
+            message: "AUth Failed",
             });
         } else {
             next();
@@ -17,9 +18,9 @@ authenticateadmin = async (req,res,next)=>{
         return res.status(401).send({
             success: false,
             message: "Auth Failed, ADMIN API",
-            errro,
+            error,
         });
     }
 };
 
-export default authenticateadmin;
+export default adminmiddleware;
