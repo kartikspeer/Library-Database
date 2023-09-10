@@ -36,7 +36,7 @@ const Login = ()=>{
     }
     const createAcc = ()=>{
         console.log(signUp);
-        Axios.post("http://localhost:8000/auth/signup",signUp).then((res)=>{
+        Axios.post("https://library-database-server.onrender.com/auth/signup",signUp).then((res)=>{
             setErr(true);
             setLogin(loginValues);
             setSignUp(signUpValues);
@@ -47,7 +47,7 @@ const Login = ()=>{
         })
     }
     const accLogin = ()=>{
-        Axios.post("http://localhost:8000/auth/login",login).then((res)=>{
+        Axios.post("https://library-database-server.onrender.com/auth/login",login).then((res)=>{
             console.log(res);
             if(res.status===200){
                 setUserTypeValue(login.role);

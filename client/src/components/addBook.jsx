@@ -42,7 +42,6 @@ const Addbook = (props)=>{
 
     useEffect(() =>{
         if(Object.keys(formErrors).length === 0 && isSubmit){
-            var scs = false;
             if(!location.state.isEdit){
                 API.post(`/books/add`, value).then((res)=>{
                 if(res.status===200){
