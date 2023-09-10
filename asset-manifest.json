@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/library-database/client/static/css/main.e6c13ad2.css",
+    "main.js": "/library-database/client/static/js/main.9d99f678.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/library-database/client/static/js/787.c4e7f8f9.chunk.js",
+    "index.html": "/library-database/client/index.html",
+    "main.e6c13ad2.css.map": "/library-database/client/static/css/main.e6c13ad2.css.map",
+    "main.9d99f678.js.map": "/library-database/client/static/js/main.9d99f678.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/library-database/client/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.9d99f678.js"
+  ]
+}
